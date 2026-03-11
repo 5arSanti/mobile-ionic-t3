@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import {
   IonButton,
   IonContent,
-  IonIcon, IonItem,
+  IonIcon,
+  IonItem,
   IonLabel,
   IonPage,
   IonCard,
@@ -20,7 +21,7 @@ import {
   IonSpinner,
   useIonToast,
   useIonLoading,
-  useIonRouter
+  useIonRouter,
 } from "@ionic/react";
 import { useParams } from "react-router-dom";
 import {
@@ -138,7 +139,7 @@ export function CreateProductPage() {
 
   const handleInputChange = (
     field: keyof CreateProductDto,
-    value: string | number | boolean
+    value: string | number | boolean,
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -213,7 +214,7 @@ export function CreateProductPage() {
         await productController.updateProductWithImage(
           parseInt(id),
           formData,
-          selectedImage || undefined
+          selectedImage || undefined,
         );
 
         await hideLoading();
@@ -230,7 +231,7 @@ export function CreateProductPage() {
         // Create new product
         await productController.createProductWithImage(
           formData,
-          selectedImage || undefined
+          selectedImage || undefined,
         );
 
         await hideLoading();
@@ -473,6 +474,20 @@ export function CreateProductPage() {
             </IonRow>
           </IonGrid>
 
+          {/* Validation Messages */}
+          {(!formData.name.trim() || formData.price <= 0) && (
+            <div className="validation-messages">
+              <p>
+                ⚠️ Completa los campos requeridos para habilitar el botón de
+                guardar:
+              </p>
+              {!formData.name.trim() && (
+                <p>• Nombre del producto es requerido</p>
+              )}
+              {formData.price <= 0 && <p>• Precio debe ser mayor a 0</p>}
+            </div>
+          )}
+
           {/* Action Buttons */}
           <div className="action-buttons">
             <IonButton
@@ -502,24 +517,10 @@ export function CreateProductPage() {
                   ? "Actualizando..."
                   : "Creando..."
                 : isEditMode
-                ? "Actualizar Producto"
-                : "Crear Producto"}
+                  ? "Actualizar Producto"
+                  : "Crear Producto"}
             </IonButton>
           </div>
-
-          {/* Validation Messages */}
-          {(!formData.name.trim() || formData.price <= 0) && (
-            <div className="validation-messages">
-              <p>
-                ⚠️ Completa los campos requeridos para habilitar el botón de
-                guardar:
-              </p>
-              {!formData.name.trim() && (
-                <p>• Nombre del producto es requerido</p>
-              )}
-              {formData.price <= 0 && <p>• Precio debe ser mayor a 0</p>}
-            </div>
-          )}
         </div>
       </IonContent>
     </IonPage>
