@@ -14,10 +14,8 @@ import {
   IonSpinner,
 } from "@ionic/react";
 import {
-  logoPaypal,
-  checkmarkCircleOutline,
-  arrowBackOutline,
-  cardOutline,
+  logoPaypal, arrowBackOutline,
+  cardOutline
 } from "ionicons/icons";
 import { useIonRouter } from "@ionic/react";
 import "./PayPalDemo.css";
@@ -127,23 +125,7 @@ export function PayPalDemoPage() {
               </div>
             </IonCardContent>
           </IonCard>
-
-          {/* Demo Notice */}
-          <IonCard className="demo-notice-card">
-            <IonCardContent>
-              <div className="demo-notice">
-                <IonIcon icon={checkmarkCircleOutline} className="demo-icon" />
-                <div className="demo-text">
-                  <h3>Modo Demostración</h3>
-                  <p>
-                    Esta es una simulación de PayPal. No se procesará ningún
-                    pago real. Al continuar, se simulará un pago exitoso.
-                  </p>
-                </div>
-              </div>
-            </IonCardContent>
-          </IonCard>
-
+          
           {/* Action Buttons */}
           <div className="action-buttons">
             <IonButton

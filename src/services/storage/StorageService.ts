@@ -52,15 +52,7 @@ export class StorageService {
       const finalFileName =
         fileName || `product_${timestamp}_${randomString}.${fileExtension}`;
 
-      console.log("Uploading image:", {
-        fileName: finalFileName,
-        fileSize: file.size,
-        fileType: file.type,
-        userId: user.id,
-      });
-
       // Try direct upload first (simpler approach)
-      console.log("Attempting direct upload...");
       const { data, error } = await supabase.storage
         .from(this.bucketName)
         .upload(finalFileName, file, {
@@ -82,7 +74,7 @@ export class StorageService {
         url: urlData.publicUrl,
       };
     } catch (error) {
-      console.error("Error uploading image:", error);
+      throw new Error(error instanceof Error ? error.message : "Error al subir la imagen");
       throw error;
     }
   }

@@ -11,16 +11,12 @@ import {
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardTitle,
-  IonChip,
-  useIonToast,
-  useIonLoading,
+  IonCardTitle, useIonToast,
+  useIonLoading
 } from "@ionic/react";
 import {
-  closeOutline,
-  checkmarkCircleOutline,
-  cardOutline,
-  logoPaypal,
+  closeOutline, cardOutline,
+  logoPaypal
 } from "ionicons/icons";
 
 import { CartWithItems } from "../../services";
@@ -53,7 +49,7 @@ export function PayPalCheckout({ isOpen, onClose, cart }: PayPalCheckoutProps) {
 
     const totalPrice = cart.items.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
-      0
+      0,
     );
     const totalPriceCOP = usdToCop(
       totalPrice,
@@ -64,7 +60,7 @@ export function PayPalCheckout({ isOpen, onClose, cart }: PayPalCheckoutProps) {
             vigenciadesde: "",
             vigenciahasta: "",
           }
-        : null
+        : null,
     );
 
     return { totalPrice, totalPriceCOP };
@@ -90,7 +86,7 @@ export function PayPalCheckout({ isOpen, onClose, cart }: PayPalCheckoutProps) {
       const paymentDetails = paypalService.createSimulatedPayPalLink(
         cart,
         totals.totalPrice,
-        "USD"
+        "USD",
       );
 
       // Show success message before redirect
@@ -190,10 +186,6 @@ export function PayPalCheckout({ isOpen, onClose, cart }: PayPalCheckoutProps) {
                     Serás redirigido a una interfaz simulada de PayPal donde
                     podrás ver el monto real. No se procesará ningún pago real.
                   </p>
-                  <IonChip color="warning" className="demo-chip">
-                    <IonIcon icon={checkmarkCircleOutline} />
-                    <span>Modo Demostración</span>
-                  </IonChip>
                 </div>
               </div>
             </IonCardContent>

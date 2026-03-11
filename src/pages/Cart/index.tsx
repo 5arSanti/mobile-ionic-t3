@@ -25,8 +25,6 @@ import {
   removeOutline,
   refreshOutline,
   checkmarkCircleOutline,
-  heartOutline,
-  heart,
 } from "ionicons/icons";
 
 import { useCart } from "../../contexts/CartContext";
@@ -39,7 +37,6 @@ import "./Cart.css";
 
 export function CartPage() {
   const [trmValue, setTrmValue] = useState<number | null>(null);
-  const [favorites, setFavorites] = useState<Set<number>>(new Set());
   const [isPayPalOpen, setIsPayPalOpen] = useState(false);
   const paypalReturnProcessed = useRef(false);
 
@@ -63,32 +60,27 @@ export function CartPage() {
   // Separate effect for PayPal return handling to avoid dependency issues
   useEffect(() => {
     if (!paypalReturnProcessed.current && PayPalService.isPayPalReturn()) {
-      console.log("Processing PayPal return...");
       paypalReturnProcessed.current = true;
       const params = PayPalService.getPayPalReturnParams();
       if (params) {
-        console.log("PayPal return params:", params);
         // Process PayPal return inline to avoid dependency issues
         const processPayPalReturn = async () => {
           try {
             if (params.payment === "success") {
-              console.log("Processing successful payment...");
               await showLoading({ message: "Procesando pago exitoso..." });
 
               if (cart && profile) {
-                console.log("Creating order for cart:", cart.id);
                 const checkoutService = new CheckoutService();
                 const { orderId } = await checkoutService.processCheckout(
                   cart,
-                  profile.id
+                  profile.id,
                 );
 
-                console.log("Order created:", orderId);
                 await clearCart();
 
                 await showToast({
                   message: `¡Pago procesado exitosamente! Orden #${orderId.slice(
-                    -8
+                    -8,
                   )}`,
                   duration: 4000,
                   color: "success",
@@ -97,7 +89,6 @@ export function CartPage() {
                 await refreshCart();
               }
             } else if (params.payment === "cancelled") {
-              console.log("Payment cancelled by user");
               await showToast({
                 message: "Pago cancelado por el usuario",
                 duration: 3000,
@@ -114,7 +105,6 @@ export function CartPage() {
               color: "danger",
             });
           } finally {
-            console.log("Hiding loading...");
             await hideLoading();
           }
         };
@@ -141,9 +131,8 @@ export function CartPage() {
         color: "success",
       });
     } catch (error) {
-      console.error("Error refreshing cart:", error);
       await showToast({
-        message: "Error al actualizar el carrito",
+        message: error instanceof Error ? error.message : "Error al actualizar el carrito",
         duration: 3000,
         color: "danger",
       });
@@ -212,18 +201,6 @@ export function CartPage() {
     }
   };
 
-  const toggleFavorite = (productId: number) => {
-    setFavorites((prev) => {
-      const newFavorites = new Set(prev);
-      if (newFavorites.has(productId)) {
-        newFavorites.delete(productId);
-      } else {
-        newFavorites.add(productId);
-      }
-      return newFavorites;
-    });
-  };
-
   const handleCheckout = () => {
     if (!profile) {
       showToast({
@@ -243,7 +220,7 @@ export function CartPage() {
     const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
     const totalPrice = cart.items.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
-      0
+      0,
     );
     const totalPriceCOP = usdToCop(
       totalPrice,
@@ -254,7 +231,7 @@ export function CartPage() {
             vigenciadesde: "",
             vigenciahasta: "",
           }
-        : null
+        : null,
     );
 
     return { totalItems, totalPrice, totalPriceCOP };
@@ -366,8 +343,8 @@ export function CartPage() {
                                           vigenciadesde: "",
                                           vigenciahasta: "",
                                         }
-                                      : null
-                                  )
+                                      : null,
+                                  ),
                                 )}
                               </p>
                             </div>
@@ -401,30 +378,6 @@ export function CartPage() {
                                   disabled={item.quantity >= 99}
                                 >
                                   <IonIcon icon={addOutline} />
-                                </IonButton>
-                              </div>
-
-                              <div className="item-actions">
-                                <IonButton
-                                  fill="clear"
-                                  size="small"
-                                  onClick={() =>
-                                    toggleFavorite(item.product.id)
-                                  }
-                                  className="favorite-button"
-                                >
-                                  <IonIcon
-                                    icon={
-                                      favorites.has(item.product.id)
-                                        ? heart
-                                        : heartOutline
-                                    }
-                                    color={
-                                      favorites.has(item.product.id)
-                                        ? "danger"
-                                        : "medium"
-                                    }
-                                  />
                                 </IonButton>
 
                                 <IonButton

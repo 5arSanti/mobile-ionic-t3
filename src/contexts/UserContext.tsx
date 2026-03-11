@@ -36,17 +36,13 @@ export function UserProvider({ children }: UserProviderProps) {
   const authController = useMemo(() => new AuthController(), []);
 
   const refreshUserData = useCallback(async () => {
-    console.log("🔄 Starting refreshUserData...");
     try {
       setIsLoading(true);
       setError(null);
 
-      console.log("👤 Getting current user...");
       const currentUser = await authController.getCurrentUser();
-      console.log("👤 Current user:", currentUser);
       
       if (!currentUser) {
-        console.log("❌ No current user found");
         setUser(null);
         setProfile(null);
         setUserRole(undefined);
@@ -54,15 +50,12 @@ export function UserProvider({ children }: UserProviderProps) {
         return;
       }
 
-      console.log("✅ Current user found:", currentUser.id);
       setUser(currentUser);
 
       // Get profile data with role information
-      console.log("📋 Getting profile data...");
       const profileData = await profileController.getProfileByUserId(
         currentUser.id
       );
-      console.log("📋 Profile data:", profileData);
       setProfile(profileData);
 
       // Extract role name
@@ -71,17 +64,13 @@ export function UserProvider({ children }: UserProviderProps) {
         typeof profileData.role === "object" &&
         "name" in profileData.role
       ) {
-        console.log("🎭 Role found:", profileData.role.name);
         setUserRole(profileData.role.name);
       } else {
-        console.log("🎭 No role found");
         setUserRole(undefined);
       }
     } catch (err) {
-      console.error("❌ Error refreshing user data:", err);
       setError(err instanceof Error ? err.message : "Error desconocido");
     } finally {
-      console.log("✅ Setting isLoading to false");
       setIsLoading(false);
     }
   }, [authController, profileController]);
@@ -95,20 +84,15 @@ export function UserProvider({ children }: UserProviderProps) {
   };
 
   useEffect(() => {
-    console.log("🚀 UserProvider useEffect triggered");
     // Initial load
     refreshUserData();
 
     // Listen to auth state changes
-    console.log("👂 Setting up auth state listener...");
     const { data: { subscription } } = authController.onAuthStateChange(
       (event, session) => {
-        console.log("🔔 Auth state changed:", event, !!session);
         if (event === "SIGNED_OUT" || !session) {
-          console.log("🚪 User signed out, clearing data");
           clearUserData();
         } else if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-          console.log("🔑 User signed in or token refreshed, refreshing data");
           // Use setTimeout to avoid async in callback as per Supabase docs
           setTimeout(async () => {
             await refreshUserData();
@@ -118,7 +102,6 @@ export function UserProvider({ children }: UserProviderProps) {
     );
 
     return () => {
-      console.log("🧹 Cleaning up auth subscription");
       // Cleanup subscription if needed
       if (subscription) {
         subscription.unsubscribe();

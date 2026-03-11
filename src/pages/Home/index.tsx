@@ -24,8 +24,6 @@ import {
 } from "@ionic/react";
 import {
   searchOutline,
-  heartOutline,
-  heart,
   cartOutline,
   starOutline,
   refreshOutline,
@@ -50,15 +48,14 @@ import "./Home.css";
 
 export function HomePage() {
   const [products, setProducts] = useState<Product[]>(
-    getCachedProducts() || []
+    getCachedProducts() || [],
   );
   const [categories, setCategories] = useState<Category[]>(
-    getCachedCategories() || []
+    getCachedCategories() || [],
   );
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const [favorites, setFavorites] = useState<Set<number>>(new Set());
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(12);
   const [trmValue, setTrmValue] = useState<number | null>(null);
@@ -112,7 +109,7 @@ export function HomePage() {
         setIsLoading(false);
       }
     },
-    [isCacheValid, showToast]
+    [isCacheValid, showToast],
   );
 
   // Load data on component mount only if cache is invalid
@@ -133,7 +130,7 @@ export function HomePage() {
     if (selectedCategory !== "all") {
       const categoryId = parseInt(selectedCategory);
       filtered = filtered.filter(
-        (product) => product.category_id === categoryId
+        (product) => product.category_id === categoryId,
       );
     }
 
@@ -142,7 +139,7 @@ export function HomePage() {
       filtered = filtered.filter(
         (product) =>
           product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.description?.toLowerCase().includes(searchTerm.toLowerCase())
+          product.description?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
@@ -160,7 +157,7 @@ export function HomePage() {
     return categories.map((category) => ({
       ...category,
       productCount: products.filter(
-        (product) => product.category_id === category.id
+        (product) => product.category_id === category.id,
       ).length,
     }));
   }, [categories, products]);
@@ -183,18 +180,6 @@ export function HomePage() {
     } finally {
       event.detail.complete();
     }
-  };
-
-  const toggleFavorite = (productId: number) => {
-    setFavorites((prev) => {
-      const newFavorites = new Set(prev);
-      if (newFavorites.has(productId)) {
-        newFavorites.delete(productId);
-      } else {
-        newFavorites.add(productId);
-      }
-      return newFavorites;
-    });
   };
 
   const openProductModal = (product: Product) => {
@@ -413,28 +398,6 @@ export function HomePage() {
                             )}
 
                             <div className="product-overlay">
-                              <IonButton
-                                fill="clear"
-                                className="favorite-button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleFavorite(product.id!);
-                                }}
-                              >
-                                <IonIcon
-                                  icon={
-                                    favorites.has(product.id!)
-                                      ? heart
-                                      : heartOutline
-                                  }
-                                  color={
-                                    favorites.has(product.id!)
-                                      ? "danger"
-                                      : "light"
-                                  }
-                                />
-                              </IonButton>
-
                               {!product.available && (
                                 <IonChip
                                   color="danger"
@@ -461,7 +424,7 @@ export function HomePage() {
                                 {product.description.length > 100
                                   ? `${product.description.substring(
                                       0,
-                                      100
+                                      100,
                                     )}...`
                                   : product.description}
                               </p>
@@ -469,7 +432,9 @@ export function HomePage() {
 
                             <div className="product-footer">
                               <div className="product-price">
-                                <span className="price-currency">$</span>
+                                <span className="price-currency">
+                                  Precio en USD: $
+                                </span>
                                 <span className="price-amount">
                                   {product.price.toFixed(2)}
                                 </span>
@@ -478,7 +443,9 @@ export function HomePage() {
                                 className="product-price"
                                 title="Precio en COP"
                               >
-                                <span className="price-currency">COP</span>
+                                <span className="price-currency">
+                                  Precio en COP:{" "}
+                                </span>
                                 <span className="price-amount">
                                   {formatCOP(
                                     usdToCop(
@@ -490,8 +457,8 @@ export function HomePage() {
                                             vigenciadesde: "",
                                             vigenciahasta: "",
                                           }
-                                        : null
-                                    )
+                                        : null,
+                                    ),
                                   )}
                                 </span>
                               </div>

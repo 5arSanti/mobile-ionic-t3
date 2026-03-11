@@ -466,7 +466,8 @@
 
 .product-footer {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
   margin-top: auto;
   padding-top: 16px;
@@ -497,6 +498,7 @@
   --border-radius: 12px;
   --padding-start: 12px;
   --padding-end: 12px;
+  width: 100%;
   font-size: 12px;
   font-weight: 600;
   text-transform: none;

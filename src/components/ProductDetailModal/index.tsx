@@ -135,7 +135,7 @@ export function ProductDetailModal({
           vigenciadesde: "",
           vigenciahasta: "",
         }
-      : null
+      : null,
   );
 
   return (
@@ -217,13 +217,13 @@ export function ProductDetailModal({
                 <h4>Precio</h4>
                 <div className="price-display">
                   <div className="price-item">
-                    <span className="price-currency">USD $</span>
+                    <span className="price-currency"> Precio en USD: $</span>
                     <span className="price-amount">
                       {product.price.toFixed(2)}
                     </span>
                   </div>
                   <div className="price-item">
-                    <span className="price-currency">COP </span>
+                    <span className="price-currency"> Precio en COP: </span>
                     <span className="price-amount">{formatCOP(copPrice)}</span>
                   </div>
                 </div>
