@@ -2,7 +2,7 @@
 
 .cart-page {
   color-scheme: light;
-  --background: linear-gradient(135deg, #fff8fc 0%, #f7e9ff 100%);
+  --background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   position: relative;
   overflow: hidden;
   min-height: 100vh;
