@@ -336,8 +336,8 @@ export function AdminPage() {
                 <IonIcon icon={analyticsOutline} />
                 <IonLabel>
                   {permissions.userRole === UserRole.ADMIN &&
-                    "👑 Administrador"}
-                  {permissions.userRole === UserRole.SELLER && "💄 Vendedor"}
+                    "Administrador"}
+                  {permissions.userRole === UserRole.SELLER && "Vendedor"}
                 </IonLabel>
               </IonChip>
             </div>

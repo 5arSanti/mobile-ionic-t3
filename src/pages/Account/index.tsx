@@ -201,9 +201,9 @@ export function AccountPage() {
                   <div className="role-info">
                     <p className="role-label">Tipo de cuenta</p>
                     <p className="role-value">
-                      {userRole === UserRole.ADMIN && "👑 Administrador"}
-                      {userRole === UserRole.CUSTOMER && "🛍️ Comprador"}
-                      {userRole === UserRole.SELLER && "💄 Vendedor"}
+                      {userRole === UserRole.ADMIN && "Administrador"}
+                      {userRole === UserRole.CUSTOMER && "Comprador"}
+                      {userRole === UserRole.SELLER && "Vendedor"}
                     </p>
                   </div>
                 </div>

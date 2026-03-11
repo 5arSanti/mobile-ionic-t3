@@ -210,7 +210,7 @@ export function MyOrdersPage() {
 
               <IonChip className="orders-chip">
                 <IonIcon icon={receiptOutline} />
-                <IonLabel>🛍️ Comprador</IonLabel>
+                <IonLabel>Comprador</IonLabel>
               </IonChip>
             </div>
           </div>

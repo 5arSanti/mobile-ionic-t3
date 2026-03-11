@@ -223,7 +223,6 @@ export function OnboardingPage() {
                     <IonLabel>
                       <div className="role-content">
                         <div className="role-header">
-                          <span className="role-icon">🛍️</span>
                           <span className="role-name">Comprador</span>
                         </div>
                         <p className="role-description">
@@ -237,7 +236,6 @@ export function OnboardingPage() {
                     <IonLabel>
                       <div className="role-content">
                         <div className="role-header">
-                          <span className="role-icon">💄</span>
                           <span className="role-name">Vendedor</span>
                         </div>
                         <p className="role-description">

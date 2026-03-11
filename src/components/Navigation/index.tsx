@@ -79,7 +79,7 @@ export function GlobalNavigation() {
           <IonLabel>Inicio</IonLabel>
         </IonTabButton>
 
-        {/* <IonTabButton tab="cart" href="/cart">
+        <IonTabButton tab="cart" href="/cart">
           <IonIcon icon={cartOutline} />
           <IonLabel>Carrito</IonLabel>
           {cartItemCount > 0 && (
@@ -87,14 +87,14 @@ export function GlobalNavigation() {
               {cartItemCount}
             </IonBadge>
           )}
-        </IonTabButton> */}
+        </IonTabButton>
 
-        {/* {permissions.isAdmin && (
+        {permissions.isAdmin && (
           <IonTabButton tab="admin" href="/admin">
             <IonIcon icon={receiptOutline} />
             <IonLabel>Admin</IonLabel>
           </IonTabButton>
-        )} */}
+        )}
 
         <IonTabButton tab="settings" href="/settings">
           <IonIcon icon={settingsOutline} />

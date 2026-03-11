@@ -31,7 +31,7 @@ import {
   analyticsOutline,
 } from "ionicons/icons";
 
-import { ProductController, Product } from "../../services";
+import { ProductController, Product, UserRole } from "../../services";
 import { useUserPermissions } from "../../contexts/useUser";
 import "./ProductManagement.css";
 
@@ -215,8 +215,8 @@ export function ProductManagementPage() {
               <IonChip className="management-chip">
                 <IonIcon icon={storefrontOutline} />
                 <IonLabel>
-                  {permissions.userRole === "admin" && "Administrador"}
-                  {permissions.userRole === "seller" && "Vendedor"}
+                  {permissions.userRole === UserRole.ADMIN && "Administrador"}
+                  {permissions.userRole === UserRole.SELLER && "Vendedor"}
                 </IonLabel>
               </IonChip>
             </div>

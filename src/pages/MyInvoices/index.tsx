@@ -214,7 +214,7 @@ export function MyInvoicesPage() {
 
               <IonChip className="invoices-chip">
                 <IonIcon icon={documentTextOutline} />
-                <IonLabel>🛍️ Comprador</IonLabel>
+                <IonLabel>Comprador</IonLabel>
               </IonChip>
             </div>
           </div>
